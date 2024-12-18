@@ -18,7 +18,7 @@ OpenJDK Runtime Environment (build 11.0.25+9-post-Ubuntu-1ubuntu120.04)
 OpenJDK 64-Bit Server VM (build 11.0.25+9-post-Ubuntu-1ubuntu120.04, mixed mode, sharing)
 ```
 
-## 遇到问题先跳转到Q&A环节
+## [遇到问题先跳转到Q&A环节](#q&a)
 ## chapter02 GettingStarted
 **本章通过编写一个简单的JNI示例，让读者有个感性的认识。我们编写一个调用C函数的Java程序，打印输出“Hello World!”**
 
@@ -130,6 +130,7 @@ Hello World, this is your first demo about native coding.
 ~/jniStu/src/chapter02$ make clean
 rm -rf *.so *.class HelloWorld.h
 ```
+<a id="q&a"></a>
 ## Q&A
 - 什么时候使用JNI技术？
 > 总体来说，当你的Java应用必须和native代码在一个进程中进行交互，就该使用jni技术了。
