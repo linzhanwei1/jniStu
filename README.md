@@ -251,12 +251,80 @@ rm -rf *.so *.class HelloWorld.h
 - str 需要判断是否为空,因为在JVM转换的过程中有内存申请的动作，小概率内存不足时返回NULL;
 - str 用完时需要释放内存：(*env)->ReleaseStringUTFChars(env, prompt, str);
 
-### 3.2.3 Constructing New String
+#### 3.2.3 Constructing New String
 - 我们也可以在Native环境中调用JNI function构造一个JVM中的字符串:(*env)->NewStringUTF(env, buf);。
 
-## 3.3 Accessing Arrays
+### 3.3 Accessing Arrays
 - JNI处理基本数据类型的数组和引用类型的数组的逻辑不同
 - 详情见工程代码,相似的内容不再详述
+
+## chapter04 Fields and Methods
+- 这一章描述字段和方法的交互策略,包括从native环境访问class中的字段，调用方法等。
+### 4.1 Accessing Fields
+- Java语言提供2种字段：
+    1. 每个实现类都包含一套成员变量
+    2. 静态字段，所有实例共享一套静态字段
+- 需求：native method访问instance fields。
+#### 4.1.2 Field Descriptors
+- 显示对应类的字段描述符:
+``` sh
+~/jniStu/src/chapter04/4_1$ javap -s -p InstanceFieldAccess
+Compiled from "InstanceFieldAccess.java"
+class InstanceFieldAccess {
+  private java.lang.String s;
+    descriptor: Ljava/lang/String;
+  InstanceFieldAccess();
+    descriptor: ()V
+
+  private native void accessField();
+    descriptor: ()V
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+
+  static {};
+    descriptor: ()V
+}
+```
+#### 4.1.3 Accessing Static Fields
+
+### 4.2 Calling Methods
+#### 4.2.2 Forming the Method Descriptor
+#### 4.2.3 Calling Static Methods
+#### 4.2.4 Calling Instance Methods of a Superclass
+### 4.3 Invoking Constructors
+### 4.4 Caching Field and Method IDs
+#### 4.4.1 Caching at the Point of Use
+#### 4.4.2 Caching in the Defining Class's Initializer
+### 4.5 Performance of JNI Field and Method Operations
+
+## chapter05 Local and Global References
+JNI导出实例和数组类型如：(jobject,jclass,jstring,jarray)都是通过opaque references。
+- JNI提供三种opaque references: local references,global references,weak global references;
+- Local和global reference有不同的生命周期。Local references 可以被自动释放，而global和weak global references 直到被程序员释放前一直有效;
+- Local或global reference可放置被引用的对象被垃圾回收。Weak global 允许垃圾回收器进行回收;
+- 并不是所有类型的引用都可以在任何上下文中使用。当native method放回后访问local reference
+是非法的。<br>
+**在本章中我们将讨论引用相关的技术细节，正确管理引用对编写可靠且节省空间的代码至关重要。**
+
+### 5.1 Local and Global References
+&nbsp;&nbsp;&nbsp;&nbsp;什么是局部引用或全局引用，它们有什么不同，我们将使用一系列实例来说明二者的不同。
+#### 5.1.1 Local References
+&nbsp;&nbsp;&nbsp;&nbsp;大量的JNI函数创建局部引用。比如：NewObject创建一个新的实例并且返回一个local reference来引用这个实例。
+&nbsp;&nbsp;&nbsp;&nbsp;
+#### 5.1.2 Global References
+#### 5.1.3 Weak Global References
+### 5.2 Freeing Feferences
+- 引用使用完毕后及时使用(*env)->DeleteLocalRef(...)
+
+## chapter06 Exceptions
+### 6.1 Overview
+#### 6.1.1 Caching and Throwing Exceptions in Native Code
+#### 6.1.2 A Utility Function
+### 6.2 Proper Exception Handing
+
+
+
 
 
 <a id="q&a"></a>
