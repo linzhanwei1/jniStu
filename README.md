@@ -323,9 +323,16 @@ JNI导出实例和数组类型如：(jobject,jclass,jstring,jarray)都是通过o
 #### 6.1.2 A Utility Function
 ### 6.2 Proper Exception Handing
 
+## chapter07 The Invocation Interface
+### 7.1 Creating the Java Virtual Machine
+### 7.2 Linking Native Applications with the Java Virtual Machine
+### 7.3 Attaching Native Threads
 
-
-
+## chapter08 Additional JNI Features
+### 8.3 Registering Native Methods
+### 8.4 Load and Unload Handlers
+#### 8.4.1 The JNI_Onload Handler
+### 8.6 JNI Programming in C++
 
 <a id="q&a"></a>
 ## Q&A
